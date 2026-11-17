@@ -4,3 +4,34 @@ $('menu').addEventListener('click',()=>{$('links').classList.toggle('open')});$(
 $('rsvp-form').addEventListener('submit',async e=>{e.preventDefault();let status=$('status');if(!cfg.rsvpEndpoint){status.textContent='This RSVP form is not storing responses yet. Follow README.md to connect the free Google Sheets backend before sharing publicly.';return}let f=new FormData(e.target),data={guestName:f.get('guestName'),contact:f.get('contact')||'',attendance:f.get('attendance'),events:f.getAll('events'),guestCount:f.get('guestCount'),message:f.get('message')||'',submittedAt:new Date().toISOString()};let b=e.target.querySelector('button');b.disabled=true;b.textContent='Sending…';try{await fetch(cfg.rsvpEndpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});status.textContent='Thank you! Your RSVP has been sent. Please contact the couple if you need to change it.';status.style.color='#354d3e';e.target.reset()}catch(err){status.textContent='We could not send your RSVP. Please try again or contact the couple.'}finally{b.disabled=false;b.textContent='Send RSVP ↗'}});
 $('share').addEventListener('click',async()=>{let d={title:'Manvi & Rishabh — Wedding Invitation',text:'Join us for the wedding of Manvi & Rishabh on 10 December 2026.',url:location.href};try{if(navigator.share)await navigator.share(d);else{await navigator.clipboard.writeText(location.href);alert('Invitation link copied. Share it on WhatsApp.')}}catch(e){}});
 $('save').addEventListener('click',()=>{let c=document.createElement('canvas'),x=c.getContext('2d');c.width=1000;c.height=700;x.fillStyle='#f4efdf';x.fillRect(0,0,1000,700);x.strokeStyle='#ad8751';x.lineWidth=2;x.strokeRect(25,25,950,650);x.strokeRect(40,40,920,620);x.textAlign='center';x.fillStyle='#ad8751';x.font='18px Georgia';x.fillText('WITH THE BLESSINGS OF OUR FAMILIES',500,125);x.font='48px Georgia';x.fillText('❦',500,190);x.fillStyle='#702f3d';x.font='italic 28px Georgia';x.fillText('Together with joy,',500,250);x.fillStyle='#354d3e';x.font='64px Georgia';x.fillText('Manvi  &  Rishabh',500,335);x.fillStyle='#696b5e';x.font='20px Georgia';x.fillText('invite you to celebrate their wedding',500,385);x.strokeStyle='#ad8751';x.beginPath();x.moveTo(420,425);x.lineTo(580,425);x.stroke();x.fillStyle='#702f3d';x.font='30px Georgia';x.fillText('10 · 12 · 2026',500,480);x.fillStyle='#696b5e';x.font='20px Georgia';x.fillText('Dehradun · Uttarakhand',500,520);x.font='14px Arial';x.fillText('FORMAL DETAILS TO FOLLOW',500,580);let a=document.createElement('a');a.download='Manvi-Rishabh-Digital-Invitation.png';a.href=c.toDataURL('image/png');a.click()});
+
+/* MANVI & RISHABH - ENVELOPE INTERACTION */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const envelope = document.getElementById("weddingEnvelope");
+  const openButton = document.getElementById("openEnvelope");
+  const enterButton = document.getElementById("enterInvitation");
+  const envelopeScreen = document.getElementById("envelopeScreen");
+  const hint = document.getElementById("envelopeHint");
+
+  if (!envelope || !openButton || !enterButton || !envelopeScreen) {
+    return;
+  }
+
+  openButton.addEventListener("click", function () {
+    envelope.classList.add("open");
+    openButton.disabled = true;
+    hint.textContent = "A beautiful beginning awaits...";
+
+    setTimeout(function () {
+      enterButton.hidden = false;
+      hint.textContent = "With love, Manvi & Rishabh";
+    }, 1800);
+  });
+
+  enterButton.addEventListener("click", function () {
+    envelopeScreen.classList.add("dismissed");
+  });
+
+});
