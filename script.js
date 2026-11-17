@@ -35,3 +35,45 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+
+/* INTERACTIVE CELEBRATION CARDS */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const cards = document.querySelectorAll(".event-grid article");
+
+  cards.forEach(function (card) {
+
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-expanded", "false");
+
+    function toggleCard() {
+
+      const isExpanded = card.classList.contains("expanded");
+
+      // Close all other cards
+      cards.forEach(function (otherCard) {
+        otherCard.classList.remove("expanded");
+        otherCard.setAttribute("aria-expanded", "false");
+      });
+
+      // Open the selected card
+      if (!isExpanded) {
+        card.classList.add("expanded");
+        card.setAttribute("aria-expanded", "true");
+      }
+    }
+
+    card.addEventListener("click", toggleCard);
+
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleCard();
+      }
+    });
+
+  });
+
+});
