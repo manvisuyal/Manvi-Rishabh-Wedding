@@ -179,3 +179,51 @@
     font-size: 26px;
   }
 }
+
+/* INTERACTIVE CELEBRATION CARDS */
+
+.event-grid article {
+  position: relative;
+  cursor: pointer;
+  max-height: 270px;
+  overflow: hidden;
+  padding-bottom: 55px;
+  transition: max-height 0.7s ease, box-shadow 0.3s ease,
+              transform 0.3s ease;
+}
+
+.event-grid article::after {
+  content: "＋  EXPLORE CELEBRATION";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--wine);
+  background: linear-gradient(
+    to bottom,
+    #fcfaf3,
+    #fcfaf3 25%
+  );
+  border-top: 1px solid var(--line);
+}
+
+.event-grid article.expanded {
+  max-height: 700px;
+  box-shadow: 0 12px 30px #354d3e18;
+  transform: translateY(-4px);
+}
+
+.event-grid article.expanded::after {
+  content: "−  CLOSE DETAILS";
+  background: var(--paper);
+}
+
+.event-grid article:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
